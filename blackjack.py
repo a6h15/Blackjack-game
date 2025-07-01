@@ -7,14 +7,43 @@ def deal_card():
     deal_player = random.choice(cards)
     return deal_player
 
+def calculate_score(cards):
+    """Takes the list of cards as input and returns the score."""
+    if sum(cards)==21 and len(cards)==2:
+        return 0 # comp will know that the cards at hand makes blackjack
+
+    if 11 in cards and sum(cards) > 21:
+        cards.remove(11)
+        cards.append(1)
+
+    return sum(cards)
+
 player_cards = []
 computer_cards = []
+comp_score = -1 #for the while loop that plays as the computer.
+player_score = -1
+game_over = False
 
-
-for _ in range(2): # '_' cuz we dont need the variable, just need to run this loop twice.
+for _ in range(2): # '_' cuz we don't need the variable, just need to run this loop twice.
     player_cards.append(deal_card())
     computer_cards.append(deal_card())
 
+while not game_over:
+    player_score = calculate_score(player_cards)
+    comp_score = calculate_score(computer_cards)
 
+    print(f"Your cards : {player_cards} ,current score : {player_score}")
+    print(f"Computer first card : {computer_cards[0]}")
 
-print(player_cards)
+    if player_score == 0 or comp_score == 0 or player_score > 21: #0 as when the sum is 21 we return 0 , thats the condition
+            game_over = True
+    else:
+        player_deals = input(f"Type 'y' to take another card or type 'n' to pass")
+        if player_deals == "y":
+            player_cards.append(deal_card())
+        else:
+            game_over = True
+
+while comp_score != 0 and comp_score < 17:
+    computer_cards.append(deal_card())
+    comp_score = calculate_score(computer_cards)
