@@ -14,7 +14,7 @@ A simple command-line Blackjack game built in **Python**. Play against the compu
 
 ```bash
 python blackjack.py
-
+```
 
 ## 🎮 How to Play
 
